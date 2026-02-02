@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
+    <title>For my Panda 🐼</title>
     <style>
         body {
             margin: 0;
@@ -13,17 +13,12 @@
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, #ffafbd, #ffc3a0);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             overflow: hidden;
             text-align: center;
         }
 
-        h1 {
-            color: #d63384;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
+        h1 { color: #d63384; z-index: 10; padding: 0 20px; }
 
         .btn-container {
             margin-top: 30px;
@@ -41,38 +36,29 @@
             border: none;
             border-radius: 50px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
         }
 
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            position: absolute;
-            left: 20px;
-        }
+        #yesBtn { background-color: #ff4d6d; color: white; position: absolute; left: 20px; }
+        #noBtn { background-color: #ffffff; color: #ff4d6d; position: absolute; right: 20px; transition: 0.1s; }
 
-        #noBtn {
-            background-color: #ffffff;
-            color: #ff4d6d;
-            position: absolute;
-            right: 20px;
-        }
-
-        /* Heart Animation */
         .heart {
             position: fixed;
-            top: -10px;
-            color: #ff4d6d;
-            font-size: 20px;
-            user-select: none;
+            top: -10vh;
+            font-size: 24px;
             z-index: 1;
             animation: fall linear forwards;
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(105vh) rotate(360deg);
-            }
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        #finalSurprise img {
+            width: 80%;
+            max-width: 350px;
+            border-radius: 20px;
+            border: 5px solid white;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -80,52 +66,45 @@
 
     <h1 id="mainHeading">Will you be my Valentine? ❤️</h1>
     
-    <div class="btn-container">
+    <div class="btn-container" id="actions">
         <button id="yesBtn" onclick="celebrate()">Yes</button>
         <button id="noBtn" onmouseover="moveButton()">No</button>
     </div>
 
+    <div id="finalSurprise" style="display:none; z-index: 20;">
+        <h1>Panda, I knew you cant live without me</h1>
+        <img src="https://i.pinimg.com/originals/5b/79/ce/5b79ce23cd7550148ef2a7d93b6d411e.gif" alt="Our Picture">
+    </div>
+
     <script>
-        // Move the "No" button
         function moveButton() {
             const btn = document.getElementById('noBtn');
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
             const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-            
-            btn.style.position = 'fixed'; // Prevents it staying in the container
+            btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
-        // Action when "Yes" is clicked
         function celebrate() {
-            document.getElementById('mainHeading').innerText = "Yay! See you on the 14th! 🥰🌹";
-            document.querySelector('.btn-container').style.display = 'none';
-            
-            // Extra heart burst
-            for(let i=0; i<50; i++) {
-                createHeart();
-            }
+            document.getElementById('mainHeading').style.display = 'none';
+            document.getElementById('actions').style.display = 'none';
+            document.getElementById('finalSurprise').style.display = 'block';
+            for(let i=0; i<50; i++) { setTimeout(createHeart, i * 100); }
         }
 
-        // Create falling hearts
         function createHeart() {
+            const items = ['❤️', '🐼', '💖', '🐾'];
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerHTML = '❤️';
+            heart.innerHTML = items[Math.floor(Math.random() * items.length)];
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            heart.style.opacity = Math.random();
             document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            setTimeout(() => { heart.remove(); }, 5000);
         }
 
-        // Start the heart shower
-        setInterval(createHeart, 300);
+        setInterval(createHeart, 400);
     </script>
-
 </body>
 </html>
