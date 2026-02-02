@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .btn-container {
+            margin-top: 30px;
+            position: relative;
+            width: 300px;
+            height: 100px;
+            z-index: 10;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            position: absolute;
+            left: 20px;
+        }
+
+        #noBtn {
+            background-color: #ffffff;
+            color: #ff4d6d;
+            position: absolute;
+            right: 20px;
+        }
+
+        /* Heart Animation */
+        .heart {
+            position: fixed;
+            top: -10px;
+            color: #ff4d6d;
+            font-size: 20px;
+            user-select: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="mainHeading">Will you be my Valentine? ❤️</h1>
+    
+    <div class="btn-container">
+        <button id="yesBtn" onclick="celebrate()">Yes</button>
+        <button id="noBtn" onmouseover="moveButton()">No</button>
+    </div>
+
+    <script>
+        // Move the "No" button
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
+            btn.style.position = 'fixed'; // Prevents it staying in the container
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        // Action when "Yes" is clicked
+        function celebrate() {
+            document.getElementById('mainHeading').innerText = "Yay! See you on the 14th! 🥰🌹";
+            document.querySelector('.btn-container').style.display = 'none';
+            
+            // Extra heart burst
+            for(let i=0; i<50; i++) {
+                createHeart();
+            }
+        }
+
+        // Create falling hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Start the heart shower
+        setInterval(createHeart, 300);
+    </script>
+
+</body>
+</html>
